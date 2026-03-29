@@ -146,7 +146,6 @@ export function LiabilitiesProvider({ children }: { children: ReactNode }) {
       const data = await res.json();
 
       if (!res.ok) {
-        console.error("Update error response:", data);
         throw new Error(data.message || "Failed to update liability");
       }
 
@@ -170,19 +169,14 @@ export function LiabilitiesProvider({ children }: { children: ReactNode }) {
         },
       });
 
-      console.log("Delete response status:", res.status);
-
       const data = await res.json();
-      console.log("Delete response data:", data);
 
       if (!res.ok) {
-        console.error("Delete error response:", data);
         throw new Error(data.message || "Failed to delete liability");
       }
 
       setLiabilities((prev) => prev.filter((l) => l._id !== id));
     } catch (error: any) {
-      console.error("Delete operation error:", error);
       throw error;
     }
   }, []);

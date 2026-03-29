@@ -5,7 +5,7 @@ import { verifyToken } from "@/lib/auth";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectDB();
@@ -23,17 +23,13 @@ export async function PUT(
     }
 
     const body = await req.json();
-    console.log("PUT /api/liabilities/[id] - Received body:", body);
 
     const { personName, amount, dateGiven, daysToReturn, description, status } =
       body;
 
     // Handle both direct params and Promise params (Next.js 16+)
-    const resolvedParams = await Promise.resolve(params);
+    const resolvedParams = await params;
     const id = resolvedParams.id;
-
-    console.log("PUT request params - id:", id, "userId:", decoded.userId);
-
     // Validate required fields
     if (
       !personName ||
@@ -71,22 +67,18 @@ export async function PUT(
     );
 
     if (!liability) {
-      console.log("Liability not found for id:", id, "userId:", decoded.userId);
       return NextResponse.json(
         { message: "Liability not found" },
         { status: 404 },
       );
     }
 
-    console.log("Liability updated successfully:", liability);
-
     return NextResponse.json(
       { message: "Liability updated successfully", liability },
       { status: 200 },
     );
   } catch (error: any) {
-    console.error("PUT /api/liabilities/[id] error:", error);
-    console.error("Error stack:", error.stack);
+    console.error("PUT /api/liabilities/[id] error:", error.message);
     return NextResponse.json(
       {
         message: error.message || "Failed to update liability",
@@ -106,7 +98,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectDB();
@@ -153,8 +145,7 @@ export async function DELETE(
       { status: 200 },
     );
   } catch (error: any) {
-    console.error("DELETE /api/liabilities/[id] error:", error);
-    console.error("Error stack:", error.stack);
+    console.error("DELETE /api/liabilities/[id] error:", error.message);
     return NextResponse.json(
       {
         message: error.message || "Failed to delete liability",

@@ -65,7 +65,6 @@ export default function LoginPage() {
       scale: 1,
       transition: {
         duration: 0.6,
-        ease: "easeOut",
       },
     },
   };
@@ -88,7 +87,6 @@ export default function LoginPage() {
       y: 0,
       transition: {
         duration: 0.4,
-        ease: "easeOut",
       },
     },
   };
@@ -121,7 +119,6 @@ export default function LoginPage() {
         transition={{
           duration: 8,
           repeat: Infinity,
-          ease: "easeInOut",
         }}
       />
       <motion.div
@@ -133,7 +130,6 @@ export default function LoginPage() {
         transition={{
           duration: 8,
           repeat: Infinity,
-          ease: "easeInOut",
           delay: 2,
         }}
       />

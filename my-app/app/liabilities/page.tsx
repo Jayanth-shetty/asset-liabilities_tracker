@@ -88,7 +88,6 @@ export default function LiabilitiesPage() {
     try {
       setSubmitError("");
       const dataToUpdate = data || editingData;
-      console.log("Updating liability with data:", dataToUpdate);
 
       await updateLiability(
         id,
@@ -105,9 +104,7 @@ export default function LiabilitiesPage() {
       );
       setEditingId(null);
       setEditingData(null);
-      console.log("Liability updated successfully");
     } catch (err: any) {
-      console.error("Update error:", err);
       setSubmitError(err.message || "Failed to update liability");
     }
   };

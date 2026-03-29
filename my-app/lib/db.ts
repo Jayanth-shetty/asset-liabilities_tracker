@@ -26,11 +26,10 @@ export async function connectDB() {
     cached.mongoose.promise = mongoose
       .connect(MONGODB_URI, opts)
       .then((mongoose) => {
-        console.log("MongoDB connected");
         return mongoose;
       })
       .catch((err) => {
-        console.log("MongoDB connection error:", err);
+        console.error("MongoDB connection error:", err);
         throw err;
       });
   }

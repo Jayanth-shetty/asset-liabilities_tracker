@@ -99,7 +99,7 @@ export default function DashboardPage() {
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         <motion.div
           animate={{ rotate: 360 }}
-          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 2, repeat: Infinity }}
           className="w-16 h-16 border-4 border-purple-300 border-t-white rounded-full"
         />
       </div>
@@ -142,7 +142,6 @@ export default function DashboardPage() {
           transition={{
             duration: 8,
             repeat: Infinity,
-            ease: "easeInOut",
           }}
         />
         <motion.div
@@ -154,7 +153,6 @@ export default function DashboardPage() {
           transition={{
             duration: 8,
             repeat: Infinity,
-            ease: "easeInOut",
             delay: 2,
           }}
         />

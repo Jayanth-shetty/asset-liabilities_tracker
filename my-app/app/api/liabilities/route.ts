@@ -49,17 +49,10 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    console.log("Received body:", body);
 
     const { personName, amount, dateGiven, daysToReturn, description } = body;
 
     if (!personName || !amount || !dateGiven || !daysToReturn) {
-      console.log("Missing fields:", {
-        personName: !!personName,
-        amount: !!amount,
-        dateGiven: !!dateGiven,
-        daysToReturn: !!daysToReturn,
-      });
       return NextResponse.json(
         { message: "Please provide all required fields" },
         { status: 400 },
@@ -76,11 +69,7 @@ export async function POST(req: NextRequest) {
       status: "pending",
     };
 
-    console.log("Creating liability with:", createData);
-
     const liability = await Liability.create(createData);
-
-    console.log("Liability created:", liability);
 
     return NextResponse.json(
       {
@@ -90,8 +79,6 @@ export async function POST(req: NextRequest) {
       { status: 201 },
     );
   } catch (error: any) {
-    console.error("Liability creation error:", error);
-    console.error("Error stack:", error.stack);
     return NextResponse.json(
       {
         message: error.message || "Failed to create liability",
