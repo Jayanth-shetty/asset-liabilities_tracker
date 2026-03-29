@@ -30,6 +30,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Real-Time Updates",
   description: "Collaborative real-time data update application",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
