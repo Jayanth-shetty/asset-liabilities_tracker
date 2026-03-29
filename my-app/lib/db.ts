@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const MONGODB_URI =
+  process.env.MONGODB_URI ||
   "mongodb+srv://jayanthshetty660_db_user:UOJJ6SXPRBDE1Id7@personal06.k6ls3zm.mongodb.net/userDB?appName=personal06";
 
 if (!MONGODB_URI) {

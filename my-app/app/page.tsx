@@ -5,6 +5,8 @@ import { useAuth } from "@/components/AuthContext";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   const router = useRouter();
   const { user, isLoading } = useAuth();
