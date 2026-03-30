@@ -61,7 +61,7 @@ export async function PUT(
     console.log("Updating with data:", updateData);
 
     const liability = await Liability.findOneAndUpdate(
-      { _id: id, userId: decoded.userId },
+      { _id: id },
       updateData,
       { new: true },
     );
@@ -127,7 +127,6 @@ export async function DELETE(
 
     const liability = await Liability.findOneAndDelete({
       _id: id,
-      userId: decoded.userId,
     });
 
     if (!liability) {

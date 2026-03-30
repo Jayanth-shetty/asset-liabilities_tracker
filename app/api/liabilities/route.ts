@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: "Invalid token" }, { status: 401 });
     }
 
-    const liabilities = await Liability.find({ userId: decoded.userId }).sort({
+    const liabilities = await Liability.find({}).sort({
       dateGiven: 1,
     });
 

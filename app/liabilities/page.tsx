@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function LiabilitiesPage() {
   const router = useRouter();
-  const { user, isLoading: authLoading } = useAuth();
+  const { user, logout, isLoading: authLoading } = useAuth();
   const {
     liabilities,
     isLoading,
@@ -30,6 +30,7 @@ export default function LiabilitiesPage() {
   const [filterStatus, setFilterStatus] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingData, setEditingData] = useState<any>(null);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   // Redirect to login if not authenticated
   useEffect(() => {
@@ -115,6 +116,11 @@ export default function LiabilitiesPage() {
     } catch (err: any) {
       setSubmitError(err.message || "Failed to delete liability");
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
   };
 
   if (authLoading) {
@@ -218,7 +224,7 @@ export default function LiabilitiesPage() {
 
       {/* Header */}
       <motion.header
-        className="bg-white/10 backdrop-blur-md border-b border-white/20 sticky top-0 z-40"
+        className="bg-white/10 backdrop-blur-md border-b border-white/20 sticky top-0 z-50"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
@@ -228,15 +234,25 @@ export default function LiabilitiesPage() {
             <h1 className="text-3xl font-bold text-white">Liabilities</h1>
             <p className="text-purple-200 text-sm">Track who owes you money</p>
           </motion.div>
-          <Link href="/dashboard">
+          <div className="flex gap-3">
+            <Link href="/dashboard">
+              <motion.button
+                className="px-6 py-2 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-semibold rounded-lg transition"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Back to Dashboard
+              </motion.button>
+            </Link>
             <motion.button
-              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-semibold rounded-lg transition"
+              onClick={() => setShowLogoutConfirm(true)}
+              className="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold rounded-lg transition"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Back to Dashboard
+              Logout
             </motion.button>
-          </Link>
+          </div>
         </div>
       </motion.header>
 
@@ -712,6 +728,50 @@ export default function LiabilitiesPage() {
           </motion.div>
         </motion.div>
       </main>
+
+      {/* Logout Confirmation Modal */}
+      <AnimatePresence>
+        {showLogoutConfirm && (
+          <motion.div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[100]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-slate-900 border border-white/20 rounded-2xl p-8 max-w-md"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+            >
+              <h3 className="text-xl font-bold text-white mb-4">
+                Confirm Logout
+              </h3>
+              <p className="text-white/80 mb-6">
+                Are you sure you want to logout from your account?
+              </p>
+              <div className="flex gap-4">
+                <motion.button
+                  onClick={() => setShowLogoutConfirm(false)}
+                  className="flex-1 px-4 py-2 bg-white/10 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/20 transition"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Cancel
+                </motion.button>
+                <motion.button
+                  onClick={handleLogout}
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-lg hover:from-red-700 hover:to-red-800 transition"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Logout
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
